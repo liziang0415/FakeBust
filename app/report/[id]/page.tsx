@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import VerdictBadge from "@/components/VerdictBadge";
 import FlaggedQuote from "@/components/FlaggedQuote";
 import CopyButton from "@/components/CopyButton";
-import clientPromise from "@/lib/mongodb";
+import { getMongoClient } from "@/lib/mongodb";
 import type { Analysis } from "@/types/analysis";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 async function getAnalysis(id: string): Promise<Analysis | null> {
-  const client = await clientPromise;
+  const client = await getMongoClient();
   const doc = await client.db("fakebuster").collection<Analysis>("analyses").findOne({ _id: id });
   return doc as Analysis | null;
 }

@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { analyzeArticle } from "@/lib/gemini";
 import { fetchArticleText } from "@/lib/article-fetcher";
-import clientPromise from "@/lib/mongodb";
+import { getMongoClient } from "@/lib/mongodb";
 import type { Analysis } from "@/types/analysis";
 
 export async function POST(request: Request) {
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       createdAt: new Date(),
     };
 
-    const client = await clientPromise;
+    const client = await getMongoClient();
     await client.db("fakebuster").collection<Analysis & { _id: string }>("analyses").insertOne(doc);
 
     return NextResponse.json({ id });

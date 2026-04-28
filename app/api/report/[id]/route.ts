@@ -1,6 +1,6 @@
 // app/api/report/[id]/route.ts
 import { NextResponse } from "next/server";
-import clientPromise from "@/lib/mongodb";
+import { getMongoClient } from "@/lib/mongodb";
 import type { Analysis } from "@/types/analysis";
 
 export async function GET(
@@ -9,7 +9,7 @@ export async function GET(
 ) {
   const { id } = await params;
   try {
-    const client = await clientPromise;
+    const client = await getMongoClient();
     const doc = await client
       .db("fakebuster")
       .collection<Analysis & { _id: string }>("analyses")
