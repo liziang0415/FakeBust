@@ -1,0 +1,25 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - build
+      - -t
+      - 'australia-southeast1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/fakebuster/fakebuster:$COMMIT_SHA'
+      - .
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - push
+      - 'australia-southeast1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/fakebuster/fakebuster:$COMMIT_SHA'
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - fakebuster
+      - --image=australia-southeast1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/fakebuster/fakebuster:$COMMIT_SHA
+      - --region=australia-southeast1
+      - --platform=managed
+
+images:
+  - 'australia-southeast1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/fakebuster/fakebuster:$COMMIT_SHA'
