@@ -5,7 +5,9 @@ let genAI: GoogleGenerativeAI | undefined;
 
 function getGenAI(): GoogleGenerativeAI {
   if (!genAI) {
-    genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) throw new Error("GEMINI_API_KEY environment variable is not set");
+    genAI = new GoogleGenerativeAI(apiKey);
   }
   return genAI;
 }
