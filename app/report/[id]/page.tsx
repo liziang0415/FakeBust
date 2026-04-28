@@ -13,7 +13,7 @@ interface Props {
 
 async function getAnalysis(id: string): Promise<Analysis | null> {
   const client = await clientPromise;
-  const doc = await client.db("fakebuster").collection("analyses").findOne({ _id: id as any });
+  const doc = await client.db("fakebuster").collection<Analysis>("analyses").findOne({ _id: id });
   return doc as Analysis | null;
 }
 
