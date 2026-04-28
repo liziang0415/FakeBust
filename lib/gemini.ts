@@ -47,7 +47,7 @@ ${truncated}`;
 
 export async function analyzeArticle(text: string): Promise<GeminiResult> {
   const model = getVertexAI().getGenerativeModel({
-    model: "gemini-2.0-flash",
+    model: "gemini-2.0-flash-001",
     generationConfig: { responseMimeType: "application/json" },
   });
   const result = await model.generateContent(buildPrompt(text));
