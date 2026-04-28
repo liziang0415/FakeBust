@@ -24,7 +24,8 @@ export interface GeminiResult {
 
 function buildPrompt(text: string): string {
   const truncated = text.slice(0, 10000);
-  return `You are a senior fact-checking journalist fluent in all languages. Analyze the article below for misinformation. Respond ONLY with valid JSON — no markdown, no text outside the JSON.
+  const today = new Date().toISOString().split("T")[0]; // e.g. 2026-04-29
+  return `Today's date is ${today}. You are a senior fact-checking journalist fluent in all languages. Analyze the article below for misinformation. Respond ONLY with valid JSON — no markdown, no text outside the JSON.
 
 JSON schema:
 {
