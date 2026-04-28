@@ -34,6 +34,8 @@ export async function POST(request: Request) {
       detectedLanguage: result.detectedLanguage,
       verdict: result.verdict,
       confidence: result.confidence,
+      summary: result.summary,
+      tone: result.tone,
       reason: result.reason,
       flaggedQuotes: result.flaggedQuotes,
       createdAt: new Date(),

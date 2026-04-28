@@ -19,7 +19,9 @@ const validResult = {
   detectedLanguage: "en",
   verdict: "FAKE",
   confidence: 85,
-  reason: "This article contains unverified claims.",
+  summary: "The article claims vaccines caused mass deaths.",
+  tone: "alarmist",
+  reason: "Several key statistics in the piece can't be traced to any published source.",
   flaggedQuotes: [{ quote: "Study proves X", warning: "No such study found." }],
 };
 
@@ -30,6 +32,8 @@ test("returns parsed GeminiResult", async () => {
   expect(result.verdict).toBe("FAKE");
   expect(result.confidence).toBe(85);
   expect(result.detectedLanguage).toBe("en");
+  expect(result.summary).toBe("The article claims vaccines caused mass deaths.");
+  expect(result.tone).toBe("alarmist");
   expect(result.flaggedQuotes).toHaveLength(1);
   expect(result.flaggedQuotes[0].quote).toBe("Study proves X");
 });

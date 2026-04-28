@@ -16,29 +16,36 @@ export interface GeminiResult {
   detectedLanguage: string;
   verdict: "REAL" | "FAKE" | "UNCERTAIN";
   confidence: number;
+  summary: string;
+  tone: string;
   reason: string;
   flaggedQuotes: Array<{ quote: string; warning: string }>;
 }
 
 function buildPrompt(text: string): string {
   const truncated = text.slice(0, 10000);
-  return `You are a multilingual fake news detection AI. Analyze the article below and respond ONLY with valid JSON — no markdown, no explanation outside the JSON.
+  return `You are a senior fact-checking journalist fluent in all languages. Analyze the article below for misinformation. Respond ONLY with valid JSON — no markdown, no text outside the JSON.
 
 JSON schema:
 {
   "detectedLanguage": "<ISO 639-1 code, e.g. en, zh, ar, fr>",
   "verdict": "REAL" | "FAKE" | "UNCERTAIN",
   "confidence": <integer 0-100>,
-  "reason": "<2-4 sentences in English explaining the verdict>",
+  "summary": "<1-2 sentences summarising what the article claims, written neutrally>",
+  "tone": "<one of: neutral | credible | sensationalist | alarmist | misleading | satirical>",
+  "reason": "<3-5 sentences in natural English explaining your verdict. Write like a human journalist — be specific about which claims or patterns led to this conclusion. Vary your sentence structure. Do not start with 'This article...' or use generic AI phrasing>",
   "flaggedQuotes": [
-    { "quote": "<exact quote from article in its original language>", "warning": "<English explanation of the red flag>" }
+    {
+      "quote": "<exact quote from the article in its original language>",
+      "warning": "<specific explanation of why this particular quote is problematic — cite evidence or explain the logical issue>"
+    }
   ]
 }
 
 Rules:
-- Respond in JSON only. No markdown fences.
-- reason must always be in English regardless of article language.
-- flaggedQuotes: 1–5 most suspicious quotes. Omit array items if article appears genuine.
+- JSON only. No markdown fences.
+- reason must always be in English regardless of the article's language.
+- flaggedQuotes: 1–5 most suspicious quotes. Empty array if the article is credible.
 - If input is too short (<50 words) or clearly not a news article, set verdict to "UNCERTAIN".
 
 Article:
@@ -47,7 +54,7 @@ ${truncated}`;
 
 export async function analyzeArticle(text: string): Promise<GeminiResult> {
   const model = getVertexAI().getGenerativeModel({
-    model: "gemini-2.0-flash-001",
+    model: "gemini-2.5-pro",
     generationConfig: { responseMimeType: "application/json" },
   });
   const result = await model.generateContent(buildPrompt(text));
