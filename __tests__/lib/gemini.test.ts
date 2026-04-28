@@ -1,6 +1,6 @@
 const mockGenerateContent = jest.fn();
-jest.mock("@google/generative-ai", () => ({
-  GoogleGenerativeAI: jest.fn().mockImplementation(() => ({
+jest.mock("@google-cloud/vertexai", () => ({
+  VertexAI: jest.fn().mockImplementation(() => ({
     getGenerativeModel: jest.fn().mockReturnValue({
       generateContent: mockGenerateContent,
     }),
@@ -10,7 +10,9 @@ jest.mock("@google/generative-ai", () => ({
 import { analyzeArticle } from "@/lib/gemini";
 
 const fakeResponse = (data: object) => ({
-  response: { text: () => JSON.stringify(data) },
+  response: {
+    candidates: [{ content: { parts: [{ text: JSON.stringify(data) }] } }],
+  },
 });
 
 const validResult = {
@@ -40,6 +42,13 @@ test("truncates text longer than 10000 chars before sending", async () => {
 });
 
 test("throws if Gemini returns invalid JSON", async () => {
-  mockGenerateContent.mockResolvedValueOnce({ response: { text: () => "not json" } });
+  mockGenerateContent.mockResolvedValueOnce({
+    response: { candidates: [{ content: { parts: [{ text: "not json" }] } }] },
+  });
   await expect(analyzeArticle("text")).rejects.toThrow();
+});
+
+test("throws if response has no candidates", async () => {
+  mockGenerateContent.mockResolvedValueOnce({ response: { candidates: [] } });
+  await expect(analyzeArticle("text")).rejects.toThrow("Empty response from Gemini");
 });

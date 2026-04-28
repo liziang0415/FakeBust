@@ -1,15 +1,15 @@
 // lib/gemini.ts
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { VertexAI } from "@google-cloud/vertexai";
 
-let genAI: GoogleGenerativeAI | undefined;
+let vertexAI: VertexAI | undefined;
 
-function getGenAI(): GoogleGenerativeAI {
-  if (!genAI) {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) throw new Error("GEMINI_API_KEY environment variable is not set");
-    genAI = new GoogleGenerativeAI(apiKey);
+function getVertexAI(): VertexAI {
+  if (!vertexAI) {
+    const project = process.env.GOOGLE_CLOUD_PROJECT;
+    if (!project) throw new Error("GOOGLE_CLOUD_PROJECT environment variable is not set");
+    vertexAI = new VertexAI({ project, location: "us-central1" });
   }
-  return genAI;
+  return vertexAI;
 }
 
 export interface GeminiResult {
@@ -46,10 +46,12 @@ ${truncated}`;
 }
 
 export async function analyzeArticle(text: string): Promise<GeminiResult> {
-  const model = getGenAI().getGenerativeModel({
+  const model = getVertexAI().getGenerativeModel({
     model: "gemini-2.0-flash",
     generationConfig: { responseMimeType: "application/json" },
   });
   const result = await model.generateContent(buildPrompt(text));
-  return JSON.parse(result.response.text()) as GeminiResult;
+  const part = result.response.candidates?.[0]?.content?.parts?.[0];
+  if (!part?.text) throw new Error("Empty response from Gemini");
+  return JSON.parse(part.text) as GeminiResult;
 }
