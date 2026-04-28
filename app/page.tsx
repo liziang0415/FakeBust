@@ -1,10 +1,18 @@
+// app/page.tsx
+import InputTabs from "@/components/InputTabs";
+import RecentAnalyses from "@/components/RecentAnalyses";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold">FakeBuster</h1>
-      <p className="mt-4 text-lg text-gray-600">
-        Multilingual AI-powered fake news detector
-      </p>
+    <main className="min-h-screen py-16 px-4">
+      <div className="max-w-xl mx-auto">
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-bold tracking-tight mb-2">🔍 FakeBuster</h1>
+          <p className="text-gray-500">Detect fake news in any language — powered by Gemini AI</p>
+        </div>
+        <InputTabs />
+        <RecentAnalyses />
+      </div>
     </main>
   );
 }

@@ -40,7 +40,7 @@ export async function POST(request: Request) {
     };
 
     const client = await clientPromise;
-    await client.db("fakebuster").collection<Analysis>("analyses").insertOne(doc as any);
+    await client.db("fakebuster").collection<Analysis & { _id: string }>("analyses").insertOne(doc);
 
     return NextResponse.json({ id });
   } catch (err) {
