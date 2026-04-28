@@ -1,0 +1,59 @@
+<h2>How should users submit news for analysis?</h2>
+<p class="subtitle">This determines the main interaction on the home page</p>
+
+<div class="cards">
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">FakeBuster — Paste Text</div>
+        <div class="mockup-body" style="padding:16px">
+          <div class="mock-input" style="height:80px;display:flex;align-items:flex-start;padding:8px;font-size:12px;color:#888">Paste the full article text or headline here...</div>
+          <button class="mock-button" style="margin-top:8px;width:100%">Analyze</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Paste Text</h3>
+      <p>User pastes the article body or headline directly. Works for any language, any source, even screenshots OCR'd by the user.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">FakeBuster — Submit URL</div>
+        <div class="mockup-body" style="padding:16px">
+          <div style="display:flex;gap:8px">
+            <input class="mock-input" style="flex:1" placeholder="https://news-article.com/story..." />
+            <button class="mock-button">Go</button>
+          </div>
+          <p style="font-size:11px;color:#888;margin-top:8px">We'll fetch and analyze the article for you</p>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — URL Input</h3>
+      <p>User pastes a link; the app fetches and parses the article. Convenient, but CORS and paywalls can block fetching. Needs a backend proxy.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">FakeBuster — Both</div>
+        <div class="mockup-body" style="padding:16px">
+          <div style="display:flex;gap:8px;margin-bottom:8px">
+            <button class="mock-button" style="flex:1;background:#4f46e5">Paste Text</button>
+            <button class="mock-button" style="flex:1;opacity:0.5">URL</button>
+          </div>
+          <div class="mock-input" style="height:60px;padding:8px;font-size:12px;color:#888">Paste article or headline text here...</div>
+          <button class="mock-button" style="margin-top:8px;width:100%">Analyze</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Both (Tabs)</h3>
+      <p>Tabbed interface: paste text OR enter URL. Most flexible for users, slightly more complex to build.</p>
+    </div>
+  </div>
+</div>

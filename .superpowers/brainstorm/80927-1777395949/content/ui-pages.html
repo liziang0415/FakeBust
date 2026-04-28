@@ -1,0 +1,114 @@
+<h2>Page Designs — Home & Report</h2>
+<p class="subtitle">Does this layout feel right for both pages?</p>
+
+<div class="split">
+
+  <!-- HOME PAGE -->
+  <div class="mockup">
+    <div class="mockup-header">/ — Home Page</div>
+    <div class="mockup-body" style="padding:20px;font-size:12px">
+
+      <!-- Nav -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <div style="font-weight:bold;font-size:14px">🔍 FakeBuster</div>
+        <div style="color:#6b7280;font-size:11px">Powered by Gemini AI</div>
+      </div>
+
+      <!-- Hero -->
+      <div style="text-align:center;margin-bottom:16px">
+        <div style="font-size:16px;font-weight:bold">Detect Fake News in Any Language</div>
+        <div style="color:#6b7280;font-size:11px;margin-top:4px">Paste an article or enter a URL — Gemini AI analyzes it instantly</div>
+      </div>
+
+      <!-- Tabs -->
+      <div style="display:flex;border-bottom:2px solid #e5e7eb;margin-bottom:12px">
+        <div style="padding:6px 16px;border-bottom:2px solid #4f46e5;color:#4f46e5;font-weight:bold;margin-bottom:-2px;font-size:11px">Paste Text</div>
+        <div style="padding:6px 16px;color:#9ca3af;font-size:11px">URL</div>
+      </div>
+
+      <!-- Text tab content -->
+      <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:8px;height:70px;color:#9ca3af;font-size:11px">
+        Paste article text or headline here (any language)...
+      </div>
+
+      <button style="width:100%;margin-top:10px;background:#4f46e5;color:white;border:none;padding:8px;border-radius:6px;font-size:12px;font-weight:bold">
+        Analyze →
+      </button>
+
+      <!-- Recent analyses -->
+      <div style="margin-top:16px">
+        <div style="font-size:10px;color:#9ca3af;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">Recent Analyses</div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div style="background:#fee2e2;border-radius:4px;padding:5px 8px;font-size:10px;display:flex;justify-content:space-between">
+            <span>🔴 "Vaccines cause 50%..." (EN)</span><span style="color:#9ca3af">2m ago</span>
+          </div>
+          <div style="background:#dcfce7;border-radius:4px;padding:5px 8px;font-size:10px;display:flex;justify-content:space-between">
+            <span>🟢 "新冠疫苗研究..." (ZH)</span><span style="color:#9ca3af">15m ago</span>
+          </div>
+          <div style="background:#fef9c3;border-radius:4px;padding:5px 8px;font-size:10px;display:flex;justify-content:space-between">
+            <span>🟡 "اكتشاف جديد..." (AR)</span><span style="color:#9ca3af">1h ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REPORT PAGE -->
+  <div class="mockup">
+    <div class="mockup-header">/report/[uuid] — Report Page</div>
+    <div class="mockup-body" style="padding:20px;font-size:12px">
+
+      <!-- Nav -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <div style="color:#4f46e5;font-size:11px">← Back to FakeBuster</div>
+        <button style="background:#f3f4f6;border:none;padding:4px 10px;border-radius:4px;font-size:10px">📋 Copy Link</button>
+      </div>
+
+      <!-- Verdict badge -->
+      <div style="text-align:center;margin-bottom:14px">
+        <div style="display:inline-block;background:#fee2e2;color:#dc2626;padding:6px 20px;border-radius:999px;font-weight:bold;font-size:14px">🔴 LIKELY FAKE</div>
+        <div style="margin-top:8px;background:#e5e7eb;border-radius:999px;height:8px;overflow:hidden">
+          <div style="width:78%;height:100%;background:#dc2626;border-radius:999px"></div>
+        </div>
+        <div style="font-size:10px;color:#9ca3af;margin-top:3px">78% confidence · Language: Arabic (AR)</div>
+      </div>
+
+      <!-- Why section -->
+      <div style="margin-bottom:12px">
+        <div style="font-size:10px;font-weight:bold;text-transform:uppercase;color:#6b7280;margin-bottom:5px">Why</div>
+        <div style="background:#f9fafb;border-left:3px solid #dc2626;padding:8px;border-radius:0 4px 4px 0;font-size:11px;color:#374151">
+          This article uses unverified statistics and emotional language to make misleading claims. Key figures cited cannot be traced to any official source, and the headline exaggerates the study's actual findings.
+        </div>
+      </div>
+
+      <!-- Flagged quotes -->
+      <div>
+        <div style="font-size:10px;font-weight:bold;text-transform:uppercase;color:#6b7280;margin-bottom:5px">Flagged Quotes</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+
+          <div style="border:1px solid #fecaca;border-radius:6px;padding:8px;background:#fff">
+            <div style="font-style:italic;color:#374151;font-size:10px;margin-bottom:4px">"المنظمة العالمية أكدت وفاة 50% من الملقحين"</div>
+            <div style="color:#dc2626;font-size:10px">⚠️ WHO made no such statement. This figure is fabricated.</div>
+          </div>
+
+          <div style="border:1px solid #fecaca;border-radius:6px;padding:8px;background:#fff">
+            <div style="font-style:italic;color:#374151;font-size:10px;margin-bottom:4px">"دراسة نشرت عام 2023 تثبت..."</div>
+            <div style="color:#f59e0b;font-size:10px">⚠️ No matching study found in any indexed journal.</div>
+          </div>
+
+          <div style="border:1px solid #fecaca;border-radius:6px;padding:8px;background:#fff">
+            <div style="font-style:italic;color:#374151;font-size:10px;margin-bottom:4px">"خبراء يحذرون من كارثة وشيكة"</div>
+            <div style="color:#f59e0b;font-size:10px">⚠️ Vague appeal to unnamed "experts" — no attribution provided.</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:16px;text-align:center;font-size:12px;color:#6b7280">
+  Does this layout work? Let me know if you want to adjust anything before I write the spec.
+</div>

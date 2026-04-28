@@ -1,0 +1,8 @@
+{"type":"server-started","port":50481,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:50481","screen_dir":"/Users/paulli/Home/Project/.superpowers/brainstorm/80927-1777395949/content","state_dir":"/Users/paulli/Home/Project/.superpowers/brainstorm/80927-1777395949/state"}
+{"type":"screen-added","file":"/Users/paulli/Home/Project/.superpowers/brainstorm/80927-1777395949/content/input-method.html"}
+{"source":"user-event","type":"click","text":"FakeBuster — Both\n        \n          \n            Paste Text\n            URL\n          \n          Paste article or headline text here...\n          Analyze\n        \n      \n    \n    \n      C — Both (Tabs)\n      Tabbed interface: paste text OR enter URL. Most flexible for users, slightly more complex to build.","choice":"c","id":null,"timestamp":1777396046618}
+{"type":"screen-added","file":"/Users/paulli/Home/Project/.superpowers/brainstorm/80927-1777395949/content/results-layout.html"}
+{"type":"screen-added","file":"/Users/paulli/Home/Project/.superpowers/brainstorm/80927-1777395949/content/waiting.html"}
+{"type":"screen-added","file":"/Users/paulli/Home/Project/.superpowers/brainstorm/80927-1777395949/content/architecture.html"}
+{"type":"screen-added","file":"/Users/paulli/Home/Project/.superpowers/brainstorm/80927-1777395949/content/system-design.html"}
+{"type":"screen-added","file":"/Users/paulli/Home/Project/.superpowers/brainstorm/80927-1777395949/content/ui-pages.html"}

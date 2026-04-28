@@ -1,0 +1,108 @@
+<h2>FakeBuster — System Architecture</h2>
+<p class="subtitle">One recommended approach. Does this look right?</p>
+
+<div class="section">
+  <div class="label">Stack</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+    <span style="background:#f3f4f6;padding:4px 12px;border-radius:999px;font-size:13px">Next.js 14 (App Router)</span>
+    <span style="background:#f3f4f6;padding:4px 12px;border-radius:999px;font-size:13px">TypeScript</span>
+    <span style="background:#f3f4f6;padding:4px 12px;border-radius:999px;font-size:13px">Tailwind CSS</span>
+    <span style="background:#f3f4f6;padding:4px 12px;border-radius:999px;font-size:13px">Gemini 2.0 Flash (free)</span>
+    <span style="background:#f3f4f6;padding:4px 12px;border-radius:999px;font-size:13px">MongoDB Atlas (free)</span>
+    <span style="background:#f3f4f6;padding:4px 12px;border-radius:999px;font-size:13px">Vercel (free)</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="label">Data Flow</div>
+  <div style="margin-top:10px;font-size:13px">
+    <div style="display:flex;align-items:stretch;gap:0;flex-wrap:wrap">
+
+      <div style="background:#ede9fe;border-radius:8px;padding:12px;min-width:140px;text-align:center">
+        <div style="font-weight:bold">Browser</div>
+        <div style="font-size:11px;color:#6b7280;margin-top:4px">Paste text<br/>or enter URL</div>
+      </div>
+
+      <div style="display:flex;align-items:center;padding:0 8px;color:#9ca3af;font-size:18px">→</div>
+
+      <div style="background:#dbeafe;border-radius:8px;padding:12px;min-width:160px;text-align:center">
+        <div style="font-weight:bold">POST /api/analyze</div>
+        <div style="font-size:11px;color:#6b7280;margin-top:4px">
+          If URL: fetch + parse article<br/>
+          Call Gemini Flash API<br/>
+          Parse structured JSON<br/>
+          Save to MongoDB
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;padding:0 8px;color:#9ca3af;font-size:18px">→</div>
+
+      <div style="background:#dcfce7;border-radius:8px;padding:12px;min-width:140px;text-align:center">
+        <div style="font-weight:bold">/report/[uuid]</div>
+        <div style="font-size:11px;color:#6b7280;margin-top:4px">
+          Verdict badge<br/>
+          Confidence %<br/>
+          Why paragraph<br/>
+          Flagged quotes<br/>
+          Detected language<br/>
+          Share link
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="label">Pages / Routes</div>
+  <div style="font-size:13px;margin-top:8px">
+    <div style="display:grid;grid-template-columns:1fr 2fr;gap:6px">
+      <div style="font-family:monospace;background:#f9fafb;padding:6px;border-radius:4px">/</div>
+      <div style="padding:6px">Home — tabbed input (Text | URL), submit button</div>
+      <div style="font-family:monospace;background:#f9fafb;padding:6px;border-radius:4px">/report/[id]</div>
+      <div style="padding:6px">Full analysis report — verdict, reasoning, flagged quotes, share</div>
+      <div style="font-family:monospace;background:#f9fafb;padding:6px;border-radius:4px">/api/analyze</div>
+      <div style="padding:6px">POST — accepts text or URL, returns redirect to /report/[id]</div>
+      <div style="font-family:monospace;background:#f9fafb;padding:6px;border-radius:4px">/api/report/[id]</div>
+      <div style="padding:6px">GET — fetches stored analysis from MongoDB for the report page</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="label">MongoDB Document (one per analysis)</div>
+  <div style="font-family:monospace;font-size:11px;background:#1e1e2e;color:#cdd6f4;padding:12px;border-radius:6px;margin-top:8px;line-height:1.6">
+    {<br/>
+    &nbsp;&nbsp;_id: UUID,<br/>
+    &nbsp;&nbsp;inputType: "text" | "url",<br/>
+    &nbsp;&nbsp;originalText: string,<br/>
+    &nbsp;&nbsp;sourceUrl?: string,<br/>
+    &nbsp;&nbsp;detectedLanguage: string,   <span style="color:#6c7086">// e.g. "zh", "ar", "en"</span><br/>
+    &nbsp;&nbsp;verdict: "REAL" | "FAKE" | "UNCERTAIN",<br/>
+    &nbsp;&nbsp;confidence: number,          <span style="color:#6c7086">// 0–100</span><br/>
+    &nbsp;&nbsp;reason: string,              <span style="color:#6c7086">// why paragraph</span><br/>
+    &nbsp;&nbsp;flaggedQuotes: [{<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;quote: string,<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;warning: string         <span style="color:#6c7086">// explanation of the red flag</span><br/>
+    &nbsp;&nbsp;}],<br/>
+    &nbsp;&nbsp;createdAt: Date<br/>
+    }
+  </div>
+</div>
+
+<div class="section">
+  <div class="label">Gemini Prompt Strategy</div>
+  <div style="font-size:13px;margin-top:8px;background:#fffbeb;padding:12px;border-radius:6px;border:1px solid #fde68a">
+    <strong>Single prompt → structured JSON output</strong><br/>
+    <span style="color:#6b7280;font-size:12px">Gemini is instructed to respond ONLY in JSON, regardless of the input language. The prompt asks it to: detect the language, assess each key claim, return verdict + confidence + reason + up to 5 flagged quotes with warnings. JSON mode (response_mime_type: "application/json") ensures parseable output every time.</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="label">Cost</div>
+  <div style="font-size:13px;margin-top:8px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+    <div style="background:#dcfce7;padding:8px;border-radius:6px;text-align:center"><div style="font-weight:bold">Vercel Hobby</div><div style="color:#16a34a">FREE</div></div>
+    <div style="background:#dcfce7;padding:8px;border-radius:6px;text-align:center"><div style="font-weight:bold">MongoDB Atlas M0</div><div style="color:#16a34a">FREE</div></div>
+    <div style="background:#dcfce7;padding:8px;border-radius:6px;text-align:center"><div style="font-weight:bold">Gemini 2.0 Flash</div><div style="color:#16a34a">FREE tier</div></div>
+  </div>
+</div>

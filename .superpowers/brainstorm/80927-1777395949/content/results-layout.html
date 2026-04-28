@@ -1,0 +1,70 @@
+<h2>What should the analysis results show?</h2>
+<p class="subtitle">After Gemini analyzes the article, what does the user see?</p>
+
+<div class="cards">
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">Result — Simple Verdict</div>
+        <div class="mockup-body" style="padding:16px;text-align:center">
+          <div style="font-size:36px;font-weight:bold;color:#ef4444">LIKELY FAKE</div>
+          <div style="margin:8px 0;background:#e5e7eb;border-radius:999px;height:12px;overflow:hidden">
+            <div style="width:78%;height:100%;background:#ef4444;border-radius:999px"></div>
+          </div>
+          <div style="font-size:12px;color:#888">78% confidence</div>
+          <div style="margin-top:12px;font-size:12px;color:#555;text-align:left">This article contains misleading claims about vaccine efficacy. Key statements are not supported by cited sources.</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Simple Verdict</h3>
+      <p>Clean verdict label + confidence bar + one paragraph explanation. Fast to read, easy to share.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">Result — Detailed Breakdown</div>
+        <div class="mockup-body" style="padding:12px;font-size:11px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <div style="background:#ef4444;color:white;padding:3px 10px;border-radius:4px;font-weight:bold">LIKELY FAKE</div>
+            <div style="color:#888">78% confidence</div>
+          </div>
+          <div style="margin-bottom:6px"><strong>Key Claims Checked:</strong></div>
+          <div style="background:#fee2e2;padding:5px;border-radius:4px;margin-bottom:4px">❌ "Vaccines cause 50% of deaths" — No evidence found</div>
+          <div style="background:#dcfce7;padding:5px;border-radius:4px;margin-bottom:4px">✅ "Study published in 2023" — Verified</div>
+          <div style="background:#fef9c3;padding:5px;border-radius:4px;margin-bottom:4px">⚠️ "WHO confirmed" — Misquoted</div>
+          <div style="margin-top:6px"><strong>Language:</strong> English &nbsp;|&nbsp; <strong>Sentiment:</strong> Alarmist</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Detailed Breakdown</h3>
+      <p>Verdict + individual claims checked (✅ ❌ ⚠️) + detected language + tone. More informative, shows the reasoning.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">Result — Full Report Card</div>
+        <div class="mockup-body" style="padding:12px;font-size:11px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
+            <div style="background:#fee2e2;padding:6px;border-radius:4px;text-align:center"><div style="font-weight:bold;color:#ef4444">FAKE</div><div style="color:#888">Verdict</div></div>
+            <div style="background:#f3f4f6;padding:6px;border-radius:4px;text-align:center"><div style="font-weight:bold">2/10</div><div style="color:#888">Credibility</div></div>
+            <div style="background:#f3f4f6;padding:6px;border-radius:4px;text-align:center"><div style="font-weight:bold">🇨🇳 ZH</div><div style="color:#888">Language</div></div>
+            <div style="background:#fef9c3;padding:6px;border-radius:4px;text-align:center"><div style="font-weight:bold">⚠️ Alarmist</div><div style="color:#888">Tone</div></div>
+          </div>
+          <div><strong>Red Flags:</strong></div>
+          <div style="color:#ef4444;font-size:10px">• Unverifiable statistics &nbsp;• Emotional language &nbsp;• No author cited &nbsp;• Missing source links</div>
+          <div style="margin-top:6px"><strong>Summary:</strong> <span style="color:#555">Article uses fear tactics and fabricated data to mislead readers about public health policy.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Full Report Card</h3>
+      <p>Score grid (verdict, credibility 1–10, language, tone) + red flags list + summary. Most comprehensive, best for sharing/embedding.</p>
+    </div>
+  </div>
+</div>

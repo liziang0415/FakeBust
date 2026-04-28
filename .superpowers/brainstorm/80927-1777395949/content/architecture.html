@@ -1,0 +1,84 @@
+<h2>How should the analysis flow work?</h2>
+<p class="subtitle">After the user submits, what happens next?</p>
+
+<div class="cards">
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">Flow A — Redirect to Report Page</div>
+        <div class="mockup-body" style="padding:12px;font-size:11px">
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+            <div style="background:#4f46e5;color:white;padding:4px 8px;border-radius:4px">① Home (input)</div>
+            <div style="color:#888">→ submit →</div>
+            <div style="background:#f3f4f6;padding:4px 8px;border-radius:4px">② Loading spinner</div>
+            <div style="color:#888">→</div>
+            <div style="background:#dcfce7;padding:4px 8px;border-radius:4px">③ /report/[uuid]</div>
+          </div>
+          <div style="margin-top:10px;border:1px dashed #d1d5db;border-radius:6px;padding:8px">
+            <div style="font-weight:bold;margin-bottom:4px">Report page shows:</div>
+            <div>🔴 LIKELY FAKE — 78%</div>
+            <div style="color:#888;font-size:10px">+ reason paragraph</div>
+            <div style="color:#888;font-size:10px">+ 3 flagged quotes from article</div>
+            <div style="margin-top:4px;color:#4f46e5;font-size:10px">🔗 Share: fakebuster.app/report/abc123</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Redirect to Report (Recommended)</h3>
+      <p>Submit → loading → redirected to unique report URL. Report page is the permanent shareable link. Clean, simple, every analysis gets its own page.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">Flow B — Inline Results + Generate Link</div>
+        <div class="mockup-body" style="padding:12px;font-size:11px">
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+            <div style="background:#4f46e5;color:white;padding:4px 8px;border-radius:4px">① Home (input)</div>
+            <div style="color:#888">→ submit →</div>
+            <div style="background:#dcfce7;padding:4px 8px;border-radius:4px">② Verdict slides in below</div>
+          </div>
+          <div style="margin-top:10px;border:1px dashed #d1d5db;border-radius:6px;padding:8px">
+            <div>🔴 LIKELY FAKE — 78%</div>
+            <div style="color:#888;font-size:10px">brief reason</div>
+            <div style="margin-top:4px">
+              <button style="font-size:10px;background:#4f46e5;color:white;border:none;padding:2px 8px;border-radius:3px">Full Report</button>
+              <button style="font-size:10px;background:#f3f4f6;border:none;padding:2px 8px;border-radius:3px;margin-left:4px">📋 Copy Link</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Inline Verdict + Share Button</h3>
+      <p>Result appears below the input box; user stays on home page. "Full Report" opens in a new page or modal. "Copy Link" generates the shareable URL on demand.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">Flow C — Streaming Analysis</div>
+        <div class="mockup-body" style="padding:12px;font-size:11px">
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+            <div style="background:#4f46e5;color:white;padding:4px 8px;border-radius:4px">① Home</div>
+            <div style="color:#888">→</div>
+            <div style="background:#fef9c3;padding:4px 8px;border-radius:4px">② Gemini streams word-by-word</div>
+          </div>
+          <div style="margin-top:10px;border:1px dashed #d1d5db;border-radius:6px;padding:8px">
+            <div style="color:#888;font-size:10px">Analyzing article...</div>
+            <div style="animation:none">Detected language: <strong>Chinese</strong></div>
+            <div>Verdict forming: <strong>🔴 FAKE</strong><span style="opacity:0.4">▌</span></div>
+            <div style="color:#888;font-size:10px">Key red flag: "statistics cannot be verified..."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Streaming (word-by-word)</h3>
+      <p>Gemini response streams in real-time — users see the analysis build up live. More engaging but complex to parse reliably and harder to store in MongoDB atomically.</p>
+    </div>
+  </div>
+</div>
