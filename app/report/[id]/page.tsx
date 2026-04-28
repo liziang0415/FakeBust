@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import VerdictBadge from "@/components/VerdictBadge";
 import FlaggedQuote from "@/components/FlaggedQuote";
 import CopyButton from "@/components/CopyButton";
+import clientPromise from "@/lib/mongodb";
 import type { Analysis } from "@/types/analysis";
 
 interface Props {
@@ -11,20 +12,18 @@ interface Props {
 }
 
 async function getAnalysis(id: string): Promise<Analysis | null> {
-  const base = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
-  const res = await fetch(`${base}/api/report/${id}`, { cache: "no-store" });
-  if (res.status === 404) return null;
-  if (!res.ok) throw new Error("Failed to load report");
-  return res.json();
+  const client = await clientPromise;
+  const doc = await client.db("fakebuster").collection("analyses").findOne({ _id: id as any });
+  return doc as Analysis | null;
 }
 
 const toneStyle: Record<string, string> = {
-  neutral:       "bg-gray-100 text-gray-600",
-  credible:      "bg-green-100 text-green-700",
-  sensationalist:"bg-orange-100 text-orange-700",
-  alarmist:      "bg-red-100 text-red-700",
-  misleading:    "bg-yellow-100 text-yellow-700",
-  satirical:     "bg-purple-100 text-purple-700",
+  neutral:        "bg-gray-100 text-gray-600",
+  credible:       "bg-green-100 text-green-700",
+  sensationalist: "bg-orange-100 text-orange-700",
+  alarmist:       "bg-red-100 text-red-700",
+  misleading:     "bg-yellow-100 text-yellow-700",
+  satirical:      "bg-purple-100 text-purple-700",
 };
 
 export default async function ReportPage({ params }: Props) {
@@ -32,7 +31,6 @@ export default async function ReportPage({ params }: Props) {
   const analysis = await getAnalysis(id);
   if (!analysis) notFound();
 
-  const shareUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/report/${id}`;
   const toneClass = toneStyle[analysis.tone] ?? "bg-gray-100 text-gray-600";
 
   return (
@@ -42,7 +40,7 @@ export default async function ReportPage({ params }: Props) {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <Link href="/" className="text-indigo-600 text-sm hover:underline">← Back to FakeBuster</Link>
-          <CopyButton url={shareUrl} />
+          <CopyButton />
         </div>
 
         {/* Verdict */}
@@ -71,7 +69,7 @@ export default async function ReportPage({ params }: Props) {
           </section>
         )}
 
-        {/* Why */}
+        {/* Analysis */}
         <section className="mb-8">
           <h2 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">Analysis</h2>
           <div className="border-l-4 border-indigo-400 pl-4 text-gray-700 text-sm leading-relaxed">
