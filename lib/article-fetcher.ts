@@ -23,7 +23,7 @@ export async function fetchArticleText(url: string): Promise<string> {
       $("body").text().trim();
 
     const cleaned = text.replace(/\s+/g, " ").trim();
-    if (cleaned.length < 20) throw new Error("Could not extract article text from this URL");
+    if (cleaned.length < 100) throw new Error("Could not extract article text from this URL");
     return cleaned;
   } finally {
     clearTimeout(timeout);

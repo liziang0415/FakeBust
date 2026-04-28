@@ -12,7 +12,7 @@ const htmlWith = (body: string) => ({
 
 test("extracts text from <article> tag", async () => {
   mockFetch.mockResolvedValue(htmlWith(
-    "<article><p>Breaking news: scientists discover water on Mars.</p></article>"
+    "<article><p>Breaking news: scientists discover water on Mars. The landmark study, published in Nature, confirms the presence of liquid water beneath the Martian south pole, opening new possibilities for life on the red planet.</p></article>"
   ));
   const text = await fetchArticleText("https://example.com/story");
   expect(text).toContain("Breaking news");
