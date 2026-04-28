@@ -1,7 +1,7 @@
 // lib/mongodb.ts
 import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI!;
+const uri = process.env.MONGODB_URI;
 if (!uri) throw new Error("MONGODB_URI is not set");
 
 let clientPromise: Promise<MongoClient>;
@@ -12,11 +12,13 @@ declare global {
 
 if (process.env.NODE_ENV === "development") {
   if (!global._mongoClientPromise) {
-    global._mongoClientPromise = new MongoClient(uri).connect();
+    const client = new MongoClient(uri);
+    global._mongoClientPromise = client.connect();
   }
   clientPromise = global._mongoClientPromise;
 } else {
-  clientPromise = new MongoClient(uri).connect();
+  const client = new MongoClient(uri);
+  clientPromise = client.connect();
 }
 
 export default clientPromise;
